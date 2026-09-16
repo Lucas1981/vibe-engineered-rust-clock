@@ -10,7 +10,7 @@ use layout::{CX, CY, HEIGHT, RADIUS, WIDTH};
 
 fn main() {
     // Load the font once — rasterisation happens per-frame but parsing is not.
-    let font_bytes: &[u8] = include_bytes!("../assets/arial-bold.ttf");
+    let font_bytes: &[u8] = include_bytes!("../assets/liberation-sans-bold.ttf");
     let font = Font::from_bytes(font_bytes, FontSettings::default()).expect("failed to load font");
 
     let mut canvas = Canvas::new(WIDTH, HEIGHT, "Clock");

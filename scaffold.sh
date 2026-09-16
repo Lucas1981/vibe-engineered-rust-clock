@@ -20,5 +20,16 @@ cargo add fontdue
 # chrono: wall-clock time; `clock` feature enables Local::now().
 cargo add chrono --features clock
 
+# Numerals font: Liberation Sans Bold (SIL Open Font License 1.1).
+# Metrically compatible with Arial; safe to embed and redistribute.
+LIBERATION_TTF_URL="https://github.com/liberationfonts/liberation-fonts/files/7261482/liberation-fonts-ttf-2.1.5.tar.gz"
+TMP=$(mktemp -d)
+curl -fsSL "$LIBERATION_TTF_URL" -o "$TMP/liberation.tar.gz"
+tar -xzf "$TMP/liberation.tar.gz" -C "$TMP"
+mkdir -p assets
+cp "$TMP/liberation-fonts-ttf-2.1.5/LiberationSans-Bold.ttf" assets/liberation-sans-bold.ttf
+cp "$TMP/liberation-fonts-ttf-2.1.5/LICENSE" assets/FONT-LICENSE.txt
+rm -rf "$TMP"
+
 echo ""
 echo "Scaffold complete — run ./build-and-run.sh to compile and launch."
