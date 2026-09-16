@@ -1,5 +1,7 @@
 # Vibe Engineered Rust Clock
 
+<img width="595" height="594" alt="Screenshot 2026-09-16 at 22 30 56" src="https://github.com/user-attachments/assets/25bf8372-0d15-40b7-87e6-80ed8ba713b2" />
+
 So this project serves two purposes: taking some small steps into the realm of learning how to work with Rust better, and taking a more serious approach to Vibe Engineering. I liked the distinction that I heard Ed Donner make first - although he attributed the term at least to Andrej Karpathy - between Vibe Coding and Vibe Engineering, where the Vibe Coding is more a prompt once and watch it run kind of exercise, whereas Vibe Engineering is more planned, organized and you monitor the progress also step by step.
 
 A Rust clock seemed like a good project to try this out with as well. At first I set up the AGENTS.md file, which is why I also kept that one in this repository. I went off the rails in the first two steps multiple times, so I would see where we would go wrong, iterate on the AGENTS.md file to make it more constrained and make the specs more clear, then try again. That works quite well and gets some good results.
