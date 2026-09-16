@@ -1,5 +1,6 @@
 mod canvas;
 mod face;
+mod hands;
 mod text;
 
 use canvas::Canvas;
@@ -23,6 +24,7 @@ fn main() {
         let pix = canvas.pixmap_mut();
         face::draw_face(pix, CX, CY, RADIUS);
         text::draw_numerals(pix, &font, CX, CY, RADIUS);
+        hands::draw_hands(pix, CX, CY, RADIUS);
         canvas.present();
     }
 }

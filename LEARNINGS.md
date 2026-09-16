@@ -95,3 +95,49 @@ In this small app, several failures are treated as fatal invariants (bad dimensi
 - **In the app:** panic → crash the process (or thread)
 
 Prefer `expect("why this must succeed")` for programmer bugs or unrecoverable environment problems; prefer `?` / `match` when failure is a normal case the program should handle. Libraries and long-running services usually return `Result` instead of panicking so callers can decide.
+
+## `const` vs `let`, and what `mut` actually means
+
+In `main` we have both:
+
+```rust
+const WIDTH: u32 = 600;
+const RADIUS: f32 = 270.0;
+
+let font = Font::from_bytes(...).expect("...");
+let mut canvas = Canvas::new(WIDTH, HEIGHT, "Clock");
+```
+
+### `const` is not “immutable `let`”
+
+`const` declares a **compile-time constant**: the value must be known (or computable) when the program is built. It is not a local stack binding created when `main` runs.
+
+`let` declares a **runtime local**. Even if you never reassign it, it is still created when that scope executes. `font` and `canvas` cannot be `const` because they come from runtime calls (`Font::from_bytes`, `Canvas::new`).
+
+So: not mutable ≠ should be `const`. Many immutable values are still `let`.
+
+### Why `let mut canvas` when we never write `canvas = ...`
+
+`mut` means the binding allows **mutation of the value**, not only reassignment of the name.
+
+We never replace `canvas` with a new `Canvas`, but we do mutate what it owns every frame:
+
+```rust
+let pix = canvas.pixmap_mut();  // &mut self
+canvas.present();               // &mut self
+```
+
+Those methods take `&mut self`, so they need a mutable binding. Without `mut`, the compiler rejects the calls (“cannot borrow as mutable”).
+
+By contrast, `is_open` takes `&self` and would work on a non-`mut` binding alone.
+
+### Mental model
+
+| What you want | Use |
+|---|---|
+| Fixed compile-time number / config | `const` |
+| Runtime value, never change it | `let` |
+| Runtime value, change fields / call `&mut self` | `let mut` |
+| Runtime value, replace the whole binding (`x = ...`) | also `let mut` |
+
+`canvas` needs `mut` because its **contents** change every frame, even though the variable always refers to the same `Canvas`.
