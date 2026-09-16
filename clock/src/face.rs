@@ -1,19 +1,18 @@
-use tiny_skia::{Color, Paint, PathBuilder, Pixmap, Stroke, Transform};
+use crate::layout::{BACKGROUND, FACE_STROKE_WIDTH, INK};
+use tiny_skia::{Paint, PathBuilder, Pixmap, Stroke, Transform};
 
 /// Fill the pixmap with white, then stroke a black circle outline.
 /// `cx`, `cy` are the centre coordinates; `radius` is to the middle of the stroke.
 pub fn draw_face(pixmap: &mut Pixmap, cx: f32, cy: f32, radius: f32) {
-    // --- white background ---
-    pixmap.fill(Color::WHITE);
+    pixmap.fill(BACKGROUND);
 
-    // --- black circle outline ---
     let path = PathBuilder::from_circle(cx, cy, radius).expect("circle path");
 
     let mut paint = Paint::default();
-    paint.set_color_rgba8(0, 0, 0, 255); // opaque black
+    paint.set_color(INK);
 
     let stroke = Stroke {
-        width: 4.0,
+        width: FACE_STROKE_WIDTH,
         ..Default::default()
     };
 

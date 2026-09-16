@@ -43,7 +43,11 @@ impl Canvas {
 
         // tiny-skia stores pixels as premultiplied RGBA; for fully-opaque
         // shapes the channel values equal their straight-alpha equivalents.
-        for (dst, rgba) in self.present_buf.iter_mut().zip(pixels.chunks_exact(4)) {
+        for (dst, rgba) in self
+            .present_buf
+            .iter_mut()
+            .zip(pixels.as_chunks::<4>().0.iter())
+        {
             *dst = ((rgba[0] as u32) << 16) | ((rgba[1] as u32) << 8) | rgba[2] as u32;
         }
 
